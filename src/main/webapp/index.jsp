@@ -4,33 +4,37 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.google.gson.JsonElement" %>
 <%@ page import="com.example.mission1.WifiService" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>JSP - Hello World</title>
     <style>
-        #wifiList {
+        .list {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
             font-size: 7pt;
+            text-align: center;
         }
 
-        #wifiList td, #wifiList th {
+        .list td, #list th {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
         }
 
-        #wifiList tr:nth-child(even) {
+        .list tr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
-        #wifiList tr:hover {
+        .list tr:hover {
             background-color: #ddd;
         }
 
-        #wifiList th {
+        .list th {
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
@@ -38,15 +42,15 @@
             color: white;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="index.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--%>
+<%--    <script src="index.js"></script>--%>
 
 </head>
 <body>
 <%
     WifiService wifiService = new WifiService();
-    System.out.println(request.getParameter("lat"));
-    System.out.println(request.getParameter("lon"));
+//    System.out.println(request.getParameter("lat"));
+//    System.out.println(request.getParameter("lon"));
 %>
 <h1> 와이파이 정보 구하기 </h1>
 <br/>
@@ -55,45 +59,41 @@
 <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 
 <div>
+<%--    <form>--%>
+<%--        LAT: <input type="text" class="lat" name="lat" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else {out.write(request.getParameter("lat"));}%>">,--%>
+<%--        LNT: <input type="text"  class="lon" name="lon" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else{out.write(request.getParameter("lon"));}%>">--%>
+<%--        <button type="button" onclick="showPosition()">내 위치 가져오기</button>--%>
+<%--        <button type="button" >근처 WIFI정보 보기</button>--%>
+<%--    </form>--%>
+
     <form>
-        LAT: <input type="text" class="lat" name="lat" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else {out.write(request.getParameter("lat"));}%>">,
-        LNT: <input type="text"  class="lon" name="lon" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else{out.write(request.getParameter("lon"));}%>">
-        <button type="button" onclick="showPosition()">내 위치 가져오기</button>
-        <button type="button" >근처 WIFI정보 보기</button>
+        LAT: <input  id="lat" name="LAT" value="0.0">,
+        LNT: <input  id="lon" name="LNT" value="0.0">
+        <button type="button" onclick="getLocation()">내 위치 가져오기</button>
+        <button type="submit" >근처 WIFI정보 보기</button>
     </form>
 
-
-    <p>Click the button to get your coordinates.</p>
-
-    <button onclick="getLocation2()">Try It</button>
-
-    <input id="demo"/>
-    <input id="demo2"/>
-
     <script>
-        var z = document.getElementById("demo");
-        var zz = document.getElementById("demo2");
+        var z = document.getElementById("lat");
+        var zz = document.getElementById("lon");
 
-        function getLocation2() {
+        function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition2);
+                navigator.geolocation.getCurrentPosition(showPosition);
             } else {
                 z.innerHTML = "Geolocation is not supported by this browser.";
             }
         }
 
-        function showPosition2(position) {
+        function showPosition(position) {
             z.value = position.coords.latitude ;
             zz.value = position.coords.longitude;
         }
     </script>
 </div>
 
-
-
-
 <br/>
-<table id="wifiList">
+<table class="list">
     <thead>
     <tr>
         <th>거리(Km)</th>
@@ -117,6 +117,48 @@
     </thead>
     <%-- TODO: 위치정보가져왔을때 보여주는걸로 바꿔야겠다--%>
     <tbody>
+        <%
+            if(request.getParameter("LAT") == null || request.getParameter("LNT") == null){
+        %>
+        <tr>
+            <td colspan="100%">위치 정보를 입력한 후에 조회해 주세요</td>
+        </tr>
+        <%
+            } else {
+                //TODO: 히스토리에 내 LAT, LNT 저장하기 --> O
+                String lat = request.getParameter("LAT");
+                String lnt = request.getParameter("LNT");
+                String searchDate = String.valueOf(LocalDate.now());
+                wifiService.insertHistory(lat, lnt, searchDate);
+                //TODO: 와이파이정보 가까운거 20개 가져오기 key값인 LAT이랑 LNT받아서 wifiService메소드로 넘겨서 쿼리처리하고 ArrayList<Wifi> wifiList반환하면 될듯!
+                ArrayList<Wifi> nearWifiList = wifiService.selectNearWifi(lat, lnt);
+        %>
+        <%for(Wifi wifi: nearWifiList){ %>
+            <tr>
+                <td><%=wifi.getX_SIFI_DISTANCE()%></td>
+                <td><%=wifi.getX_SWIFI_MGR_NO()%></td>
+                <td><%=wifi.getX_SWIFI_WRDOFC()%></td>
+                <td><%=wifi.getX_SWIFI_MAIN_NM()%></td>
+                <td><%=wifi.getX_SWIFI_ADRES1()%></td>
+                <td><%=wifi.getX_SWIFI_ADRES2()%></td>
+                <td><%=wifi.getX_SWIFI_INSTL_FLOOR()%></td>
+                <td><%=wifi.getX_SWIFI_INSTL_TY()%></td>
+                <td><%=wifi.getX_SWIFI_INSTL_MBY()%></td>
+                <td><%=wifi.getX_SWIFI_SVC_SE()%></td>
+                <td><%=wifi.getX_SWIFI_CMCWR()%></td>
+                <td><%=wifi.getX_SWIFI_CNSTC_YEAR()%></td>
+                <td><%=wifi.getX_SWIFI_INOUT_DOOR()%></td>
+                <td><%=wifi.getX_SWIFI_REMARS3()%></td>
+                <td><%=wifi.getLAT()%></td>
+                <td><%=wifi.getLNT()%></td>
+                <td><%=wifi.getWORK_DTTM()%></td>
+            </tr>
+        <%
+                }
+            }
+        %>
+
+
 
 <%--    <%--%>
 <%--        int rowCnt = wifiService.selectCount();--%>

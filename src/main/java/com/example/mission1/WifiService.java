@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class WifiService {
@@ -136,8 +137,127 @@ public class WifiService {
                 String year = rs.getString("X_SWIFI_CNSTC_YEAR");
                 String door = rs.getString("X_SWIFI_INOUT_DOOR");
                 String remars3 = rs.getString("X_SWIFI_REMARS3");
-                String lat = rs.getString("LAT");
-                String lnt = rs.getString("LNT");
+                Double lat = rs.getDouble("LAT");
+                Double lnt = rs.getDouble("LNT");
+                String dttm = rs.getString("WORK_DTTM");
+                // set해주고
+                Wifi wifi = new Wifi();
+                wifi.setX_SWIFI_MGR_NO(no);
+                //wifi.setX_SIFI_DISTANCE(distance);
+                wifi.setX_SWIFI_WRDOFC(wrdofc);
+                wifi.setX_SWIFI_MAIN_NM(name);
+                wifi.setX_SWIFI_ADRES1(adres1);
+                wifi.setX_SWIFI_ADRES2(adres2);
+                wifi.setX_SWIFI_INSTL_FLOOR(floor);
+                wifi.setX_SWIFI_INSTL_TY(ty);
+                wifi.setX_SWIFI_INSTL_MBY(mby);
+                wifi.setX_SWIFI_SVC_SE(se);
+                wifi.setX_SWIFI_CMCWR(cmcwr);
+                wifi.setX_SWIFI_CNSTC_YEAR(year);
+                wifi.setX_SWIFI_INOUT_DOOR(door);
+                wifi.setX_SWIFI_REMARS3(remars3);
+                wifi.setLAT(lat);
+                wifi.setLNT(lnt);
+                wifi.setWORK_DTTM(dttm);
+                //wifiList에 추가
+                wifiList.add(wifi);
+            }
+            // wifiList 반환
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return wifiList;
+    }
+
+    public ArrayList<Wifi> selectNearWifi(String latitud, String longitude) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList<Wifi> wifiList = new ArrayList<>();
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+            System.out.println(longitude);
+            System.out.println(latitud);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "SELECT" +
+                    "    * , (" +
+                    "       6371 * acos ( cos ( radians(?) )" +
+                    "          * cos( radians( LAT ) )" +
+                    "          * cos( radians( LNT) - radians(?) )" +
+                    "          + sin ( radians(?) ) * sin( radians( LAT ) )" +
+                    "       )" +
+                    "   ) AS dist" +
+                    " from wifiinfo" +
+                    " order by dist" +
+                    " limit 20;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, longitude);
+            ps.setString(2, latitud);
+            ps.setString(3, longitude);
+
+            // 4. sql문장 실행
+            rs = ps.executeQuery();
+
+            // 5. sql 결과 처리
+            while (rs.next()) {
+                // getString으로 16개 행전부 가져와서
+                String no = rs.getString("X_SWIFI_MGR_NO");
+                Double distance = rs.getDouble("dist");
+                String wrdofc = rs.getString("X_SWIFI_WRDOFC");
+                String name = rs.getString("X_SWIFI_MAIN_NM");
+                String adres1 = rs.getString("X_SWIFI_ADRES1");
+                String adres2 = rs.getString("X_SWIFI_ADRES2");
+                String floor = rs.getString("X_SWIFI_INSTL_FLOOR");
+                String ty = rs.getString("X_SWIFI_INSTL_TY");
+                String mby = rs.getString("X_SWIFI_INSTL_MBY");
+                String se = rs.getString("X_SWIFI_SVC_SE");
+                String cmcwr = rs.getString("X_SWIFI_CMCWR");
+                String year = rs.getString("X_SWIFI_CNSTC_YEAR");
+                String door = rs.getString("X_SWIFI_INOUT_DOOR");
+                String remars3 = rs.getString("X_SWIFI_REMARS3");
+                Double lat = rs.getDouble("LAT");
+                Double lnt = rs.getDouble("LNT");
                 String dttm = rs.getString("WORK_DTTM");
                 // set해주고
                 Wifi wifi = new Wifi();
@@ -255,8 +375,8 @@ public class WifiService {
             ps.setString(11, wifi.getX_SWIFI_CNSTC_YEAR());
             ps.setString(12, wifi.getX_SWIFI_INOUT_DOOR());
             ps.setString(13, wifi.getX_SWIFI_REMARS3());
-            ps.setString(14, wifi.getLAT());
-            ps.setString(15, wifi.getLNT());
+            ps.setDouble(14, wifi.getLAT());
+            ps.setDouble(15, wifi.getLNT());
             ps.setString(16, wifi.getWORK_DTTM());
 
 
@@ -362,8 +482,8 @@ public class WifiService {
                 ps.setString(11, wifi.getX_SWIFI_CNSTC_YEAR());
                 ps.setString(12, wifi.getX_SWIFI_INOUT_DOOR());
                 ps.setString(13, wifi.getX_SWIFI_REMARS3());
-                ps.setString(14, wifi.getLAT());
-                ps.setString(15, wifi.getLNT());
+                ps.setDouble(14, wifi.getLAT());
+                ps.setDouble(15, wifi.getLNT());
                 ps.setString(16, wifi.getWORK_DTTM());
                 // 4. sql문장 실행
                 affectedRows = ps.executeUpdate();
@@ -405,5 +525,149 @@ public class WifiService {
         }
     }
 
+    public void insertHistory(String lat, String lnt, String searchDate) {
 
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "insert into HISTORY (X, Y, SEARCH_DATE)" +
+                    "values (?, ?, ?);";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, lat);
+            ps.setString(2, lnt);
+            ps.setString(3, searchDate);
+
+            // 4. sql문장 실행
+            int affectedRows = ps.executeUpdate();
+            // 5. sql 결과 처리
+            if (affectedRows > 0) {
+                System.out.println("히스토리 저장 성공");
+            } else {
+                System.out.println("히스토리 저장 실패");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public ArrayList<History> selectHistory() {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList<History> historyList = new ArrayList<>();
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "select * from HISTORY;";
+            ps = conn.prepareStatement(sql);
+
+            // 4. sql문장 실행
+            rs = ps.executeQuery();
+
+            // 5. sql 결과 처리
+            while (rs.next()) {
+                // getString으로 16개 행전부 가져와서
+                String id = rs.getString("ID");
+                String x = rs.getString("X");
+                String y = rs.getString("Y");
+                String search_date = rs.getString("SEARCH_DATE");
+
+                // set해주고
+                History history = new History();
+                history.setId(id);
+                history.setX(x);
+                history.setY(y);
+                history.setSearch_date(search_date);
+                //wifiList에 추가
+                historyList.add(history);
+            }
+            // wifiList 반환
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return historyList;
+    }
 }

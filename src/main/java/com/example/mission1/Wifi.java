@@ -25,7 +25,7 @@ import java.util.Date;
 public class Wifi {
 
     private String X_SWIFI_MGR_NO;	// 관리번호
-    private String X_SIFI_DISTANCE; // 거리
+    private Double X_SIFI_DISTANCE; // 거리
     private String X_SWIFI_WRDOFC;	//자치구
     private String X_SWIFI_MAIN_NM;	//와이파이명
     private String X_SWIFI_ADRES1;	//도로명주소
@@ -38,8 +38,8 @@ public class Wifi {
     private String X_SWIFI_CNSTC_YEAR;	//설치년도
     private String X_SWIFI_INOUT_DOOR;	//실내외구분
     private String X_SWIFI_REMARS3;	//wifi접속환경
-    private String LAT;	//Y좌표
-    private String LNT;	//X좌표
+    private Double LAT;	//Y좌표
+    private Double LNT;	//X좌표
     private String WORK_DTTM;	//작업일자
 
     public String getX_SWIFI_MGR_NO() {
@@ -50,11 +50,11 @@ public class Wifi {
         X_SWIFI_MGR_NO = x_SWIFI_MGR_NO;
     }
 
-    public String getX_SIFI_DISTANCE() {
+    public Double getX_SIFI_DISTANCE() {
         return X_SIFI_DISTANCE;
     }
 
-    public void setX_SIFI_DISTANCE(String x_SIFI_DISTANCE) {
+    public void setX_SIFI_DISTANCE(Double x_SIFI_DISTANCE) {
         X_SIFI_DISTANCE = x_SIFI_DISTANCE;
     }
 
@@ -154,19 +154,19 @@ public class Wifi {
         X_SWIFI_REMARS3 = x_SWIFI_REMARS3;
     }
 
-    public String getLAT() {
+    public Double getLAT() {
         return LAT;
     }
 
-    public void setLAT(String LAT) {
+    public void setLAT(Double LAT) {
         this.LAT = LAT;
     }
 
-    public String getLNT() {
+    public Double getLNT() {
         return LNT;
     }
 
-    public void setLNT(String LNT) {
+    public void setLNT(Double LNT) {
         this.LNT = LNT;
     }
 

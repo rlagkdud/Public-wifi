@@ -61,5 +61,10 @@ public class WifiMain {
 
         //wifiService.insertList(wifiList);
         wifiService.select();
+
+
+        // TODO: history delete 만들기
+        // TODO: 와아피아 상세정보 보여주기
+
     }
 }
