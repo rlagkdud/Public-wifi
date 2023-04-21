@@ -47,7 +47,7 @@
 
 
     // post한 body읽어오기
-    //request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
     String name = request.getParameter("name");
     String order =request.getParameter("order");
     System.out.println("name = " + name);
