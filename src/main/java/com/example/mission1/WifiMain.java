@@ -60,11 +60,22 @@ public class WifiMain {
 //        System.out.println(wifiObj.size());
 
         //wifiService.insertList(wifiList);
-        wifiService.select();
 
-
-        // TODO: history delete 만들기
-        // TODO: 와아피아 상세정보 보여주기
+        // TODO:
+        // TODO: 북마크그룹/ 북마크 테이블 생성 O
+        //in 즐겨찾기 그룹 관리
+        //          북마크 목룍 보여주기 O
+        //          북마크그룹이름 추가
+        //                북마크이름/ 순서 입력받아 북마크table에 insert
+        //          북마크그룹 삭제
+        //          북마크그룹 수정
+        //
+        // in detail
+        //      북마크 그룹이름 선택 (if 북마크 테이블에 row가 있을때 drop down메뉴로 보여주기)
+        //      즐겨찾기 추가버튼 누르면 즐겨찾기 table에 isert해서 즐겨찾기 보기 메뉴에서 볼 수 있도록
+        //
+        // in 즐겨찾기보기
+        //      즐겨찾기 삭제
 
     }
 }

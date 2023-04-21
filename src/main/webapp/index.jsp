@@ -52,17 +52,16 @@
 <h1> 와이파이 정보 구하기 </h1>
 <br/>
 <a href="index.jsp">홈</a>
+|
 <a href="history.jsp">위치 히스토리 목록</a>
+|
 <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+|
+<a href="">즐겨 찾기 보기</a>
+|
+<a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
 <div>
-<%--    <form>--%>
-<%--        LAT: <input type="text" class="lat" name="lat" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else {out.write(request.getParameter("lat"));}%>">,--%>
-<%--        LNT: <input type="text"  class="lon" name="lon" value="<%if(request.getParameter("lat") == null){out.write("0.0");} else{out.write(request.getParameter("lon"));}%>">--%>
-<%--        <button type="button" onclick="showPosition()">내 위치 가져오기</button>--%>
-<%--        <button type="button" >근처 WIFI정보 보기</button>--%>
-<%--    </form>--%>
-
     <form>
         LAT: <input  id="lat" name="LAT" value="0.0">,
         LNT: <input  id="lon" name="LNT" value="0.0">

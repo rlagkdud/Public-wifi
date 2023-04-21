@@ -14,7 +14,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Load Wify</title>
+    <title>Load Wifi</title>
 </head>
 <body>
 <%

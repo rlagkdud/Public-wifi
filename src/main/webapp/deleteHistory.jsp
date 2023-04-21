@@ -45,8 +45,14 @@
 <h1> 와이파이 정보 구하기 </h1>
 <br/>
 <a href="index.jsp">홈</a>
+|
 <a href="history.jsp">위치 히스토리 목록</a>
+|
 <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+|
+<a href="">즐겨 찾기 보기</a>
+|
+<a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
 <div>
     <form>
@@ -84,20 +90,18 @@
 %>
 <script>
     alert("삭제 성공");
-    location.href="index.jsp";
+    location.href="history.jsp";
 </script>
 <%
     } else{
 %>
 <script>
     alert("삭제 실패");
-    location.href="index.jsp";
+    location.href="history.jsp";
 </script>
 <%
     }
 %>
-
-<h2>히스토리 삭제요!</h2>
 
 </body>
 </html>

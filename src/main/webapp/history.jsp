@@ -47,8 +47,14 @@
 <body>
 <h1>위치 히스토리 목록</h1>
 <a href="index.jsp">홈</a>
+|
 <a href="history.jsp">위치 히스토리 목록</a>
+|
 <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+|
+<a href="">즐겨 찾기 보기</a>
+|
+<a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
 <table class="list">
     <thead>
@@ -93,17 +99,17 @@
 
         <% } %>
     </tbody>
-    <script>
+<%--    <script>--%>
 
-        function getHistoryInfo(){
-            var id = document.getElementById("historyId");
-            var input = document.getElementsByTagName("input");
-            console.log(id.innerHTML);
-            console.log("history info");
-            input.value = id.innerHTML;
-            return id;
-        }
-    </script>
+<%--        function getHistoryInfo(){--%>
+<%--            var id = document.getElementById("historyId");--%>
+<%--            var input = document.getElementsByTagName("input");--%>
+<%--            console.log(id.innerHTML);--%>
+<%--            console.log("history info");--%>
+<%--            input.value = id.innerHTML;--%>
+<%--            return id;--%>
+<%--        }--%>
+<%--    </script>--%>
 
 </body>
 </html>
