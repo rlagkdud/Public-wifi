@@ -774,4 +774,74 @@ public class WifiService {
         }
         return wifi;
     }
+
+    public int deleteHistory(String mrgNo) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int res = 0;
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "delete from HISTORY where ID = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, mrgNo);
+
+            // 4. sql문장 실행
+            res = ps.executeUpdate();
+
+            // 5. sql 결과 처리
+            if(res>0){
+                System.out.println("히스토리 삭제 성공");
+            } else{
+                System.out.println("히스토리 삭제 실패");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+
 }

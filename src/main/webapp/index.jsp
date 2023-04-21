@@ -42,15 +42,12 @@
             color: white;
         }
     </style>
-<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--%>
-<%--    <script src="index.js"></script>--%>
+
 
 </head>
 <body>
 <%
     WifiService wifiService = new WifiService();
-//    System.out.println(request.getParameter("lat"));
-//    System.out.println(request.getParameter("lon"));
 %>
 <h1> 와이파이 정보 구하기 </h1>
 <br/>
@@ -81,7 +78,8 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
-                z.innerHTML = "Geolocation is not supported by this browser.";
+                z.value = "Geolocation is not supported by this browser.";
+                zz.value= "Geolocation is not supported by this browser."
             }
         }
 

@@ -61,6 +61,9 @@
     </tr>
     </thead>
     <%-- TODO: delete 만들기   --%>
+<%--    1. getHistoryInfo로 history info를 url의 parameter로 전달--%>
+<%--    2. 전달된 파라미터를 가지고 deleteHistory.jsp?파라미터들 url로 이동--%>
+<%--    3. 삭제하기를 누르면 parameter를 가진 deleteHistory()실행--%>
     <%
         WifiService wifiService = new WifiService();
         ArrayList<History> historyList = wifiService.selectHistory();
@@ -68,9 +71,7 @@
     <tbody>
         <% for(History h : historyList) { %>
             <tr>
-                <td>
-                    <%=h.getId()%>
-                </td>
+                <td id="historyId"><%=h.getId()%></td>
                 <td>
                     <%=h.getX()%>
                 </td>
@@ -81,13 +82,28 @@
                     <%=h.getSearch_date()%>
                 </td>
                 <td>
-                    <button>삭제</button>
+                    <button type="button">
+                        <a href="deleteHistory.jsp?mrg-no=<%=h.getId()%>">
+                            삭제
+                        </a>
+                    </button>
                 </td>
 
             </tr>
 
         <% } %>
     </tbody>
+    <script>
+
+        function getHistoryInfo(){
+            var id = document.getElementById("historyId");
+            var input = document.getElementsByTagName("input");
+            console.log(id.innerHTML);
+            console.log("history info");
+            input.value = id.innerHTML;
+            return id;
+        }
+    </script>
 
 </body>
 </html>
