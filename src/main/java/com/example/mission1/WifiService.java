@@ -614,7 +614,7 @@ public class WifiService {
             conn = DriverManager.getConnection(url, dbUserid, dbPassword);
 
             // 3. sql을 위한 statement객체 생성
-            String sql = "select * from HISTORY;";
+            String sql = "select * from HISTORY order by ID desc;";
             ps = conn.prepareStatement(sql);
 
             // 4. sql문장 실행
@@ -669,5 +669,109 @@ public class WifiService {
             }
         }
         return historyList;
+    }
+
+    public Wifi selectDetail(String mgrNo) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        // wifi 객체 생성
+        Wifi wifi = new Wifi();
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "select * from wifiinfo where X_SWIFI_MGR_NO=?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, mgrNo);
+
+            // 4. sql문장 실행
+            rs = ps.executeQuery();
+
+            // 5. sql 결과 처리
+            if (rs.next()) {
+                // getString으로 16개 행전부 가져와서
+                String no = rs.getString("X_SWIFI_MGR_NO");
+                Double distance = rs.getDouble("X_SWIFI_DISTANCE");
+                String wrdofc = rs.getString("X_SWIFI_WRDOFC");
+                String name = rs.getString("X_SWIFI_MAIN_NM");
+                String adres1 = rs.getString("X_SWIFI_ADRES1");
+                String adres2 = rs.getString("X_SWIFI_ADRES2");
+                String floor = rs.getString("X_SWIFI_INSTL_FLOOR");
+                String ty = rs.getString("X_SWIFI_INSTL_TY");
+                String mby = rs.getString("X_SWIFI_INSTL_MBY");
+                String se = rs.getString("X_SWIFI_SVC_SE");
+                String cmcwr = rs.getString("X_SWIFI_CMCWR");
+                String year = rs.getString("X_SWIFI_CNSTC_YEAR");
+                String door = rs.getString("X_SWIFI_INOUT_DOOR");
+                String remars3 = rs.getString("X_SWIFI_REMARS3");
+                Double lat = rs.getDouble("LAT");
+                Double lnt = rs.getDouble("LNT");
+                String dttm = rs.getString("WORK_DTTM");
+                // set해주고
+                wifi.setX_SWIFI_MGR_NO(no);
+                wifi.setX_SIFI_DISTANCE(distance);
+                wifi.setX_SWIFI_WRDOFC(wrdofc);
+                wifi.setX_SWIFI_MAIN_NM(name);
+                wifi.setX_SWIFI_ADRES1(adres1);
+                wifi.setX_SWIFI_ADRES2(adres2);
+                wifi.setX_SWIFI_INSTL_FLOOR(floor);
+                wifi.setX_SWIFI_INSTL_TY(ty);
+                wifi.setX_SWIFI_INSTL_MBY(mby);
+                wifi.setX_SWIFI_SVC_SE(se);
+                wifi.setX_SWIFI_CMCWR(cmcwr);
+                wifi.setX_SWIFI_CNSTC_YEAR(year);
+                wifi.setX_SWIFI_INOUT_DOOR(door);
+                wifi.setX_SWIFI_REMARS3(remars3);
+                wifi.setLAT(lat);
+                wifi.setLNT(lnt);
+                wifi.setWORK_DTTM(dttm);
+            }
+            // wifi 객체 반환
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return wifi;
     }
 }

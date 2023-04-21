@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>와이파이 정보 구하기</title>
     <style>
         .list {
             font-family: Arial, Helvetica, sans-serif;
@@ -138,7 +138,13 @@
                 <td><%=wifi.getX_SIFI_DISTANCE()%></td>
                 <td><%=wifi.getX_SWIFI_MGR_NO()%></td>
                 <td><%=wifi.getX_SWIFI_WRDOFC()%></td>
-                <td><%=wifi.getX_SWIFI_MAIN_NM()%></td>
+
+                <td>
+                    <a href="detail.jsp?mgr-no=<%=wifi.getX_SWIFI_MGR_NO()%>">
+                        <%=wifi.getX_SWIFI_MAIN_NM()%>
+                    </a>
+                </td>
+
                 <td><%=wifi.getX_SWIFI_ADRES1()%></td>
                 <td><%=wifi.getX_SWIFI_ADRES2()%></td>
                 <td><%=wifi.getX_SWIFI_INSTL_FLOOR()%></td>
