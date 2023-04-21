@@ -5,9 +5,10 @@
   Time: 4:27 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Title</title>
     <style>
         .list {
@@ -45,7 +46,6 @@
     </style>
 </head>
 <body>
-<% request.setCharacterEncoding("UTF-8"); %>
 <h1> 북마크 그룹 목록 </h1>
 <br/>
 <a href="index.jsp">홈</a>
@@ -59,22 +59,22 @@
 <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
 <table class="list">
-    <form action="bookmark-group-submit.jsp" method="GET" accept-charset="utf-8">
+    <form action="bookmark-group-submit.jsp" method="POST">
         <tr>
             <th>북마크 이름</th>
             <td>
-                <input name="name" id="name">
+                <input name="name">
             </td>
         </tr>
         <tr>
             <th>순서</th>
             <td>
-                <input name="order" id="order">
+                <input name="order">
             </td>
         </tr>
         <tr>
             <td colspan="100%" style="text-align: center">
-                <input type="submit" value="추가">
+                <button type="submit">추가</button>
             </td>
         </tr>
     </form>
