@@ -29,7 +29,7 @@ public class BookmarkService {
             conn = DriverManager.getConnection(url, dbUserid, dbPassword);
 
             // 3. sql을 위한 statement객체 생성
-            String sql = "select * from BOOKMARK_GROUP;";
+            String sql = "select * from BOOKMARK_GROUP order by GROUP_ORDER;";
             ps = conn.prepareStatement(sql);
 
             // 4. sql문장 실행
