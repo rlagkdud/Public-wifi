@@ -89,6 +89,84 @@ public class BookmarkService {
         return boomarkGroupList;
     }
 
+    public BookmarkGroup selectOneBookmarkGroup(int id) {
+
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        BookmarkGroup group = new BookmarkGroup();
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "select GROUP_ID, GROUP_NM, GROUP_ORDER from BOOKMARK_GROUP where GROUP_ID = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            // 4. sql문장 실행
+            rs = ps.executeQuery();
+
+            // 5. sql 결과 처리
+            if (rs.next()) {
+                int groupId = rs.getInt("GROUP_ID");
+                String groupName = rs.getString("GROUP_NM");
+                int groupOrder = rs.getInt("GROUP_ORDER");
+                //String groupRegDate = rs.getString("GROUP_REG_DATE");
+                //String groupEditDate = rs.getString("GROUP_EDIT_DATE");
+
+                // set해주고
+                group.setGroupId(groupId);
+                group.setGroupName(groupName);
+                group.setGroupOrder(groupOrder);
+                //group.setGroupRegDate(groupRegDate);
+                //group.setGroupEditDate(groupEditDate);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return group;
+    }
+
     public int insertBookmarkGroup(String name, String order) {
 
         String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
@@ -123,6 +201,74 @@ public class BookmarkService {
             // 4. sql문장 실행
             res = ps.executeUpdate();
             // 5. sql 결과 처리
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    public int deleteBookmarkGroup(int id) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int res = 0;
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "delete from BOOKMARK_GROUP where GROUP_ID = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            // 4. sql문장 실행
+            res = ps.executeUpdate();
+
+            // 5. sql 결과 처리
+            if(res>0){
+                System.out.println("북마크 그룹 삭제 성공");
+            } else{
+                System.out.println("북바크 그룹 삭제 실패");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

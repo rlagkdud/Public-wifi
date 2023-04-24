@@ -67,7 +67,7 @@ public class WifiMain {
         //          북마크 목룍 보여주기 O
         //          북마크그룹이름 추가 O
         //                북마크이름/ 순서 입력받아 북마크table에 insert O
-        //          북마크그룹 삭제
+        //          북마크그룹 삭제 O
         //          북마크그룹 수정
         //
         // in detail
@@ -76,6 +76,10 @@ public class WifiMain {
         //
         // in 즐겨찾기보기
         //      즐겨찾기 삭제
+
+
+         BookmarkService bookmarkService = new BookmarkService();
+         bookmarkService.deleteBookmarkGroup(19);
 
     }
 }

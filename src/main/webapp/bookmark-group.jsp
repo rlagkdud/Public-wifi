@@ -21,9 +21,11 @@
             text-align: center;
 
         }
-        th{
+
+        th {
             border: solid 1px #ddd;
         }
+
         .list td, #list th {
             border: 1px solid #ddd;
             padding: 8px;
@@ -62,10 +64,10 @@
 
 <div>
     <form>
-        LAT: <input  id="lat" name="LAT" value="0.0">,
-        LNT: <input  id="lon" name="LNT" value="0.0">
+        LAT: <input id="lat" name="LAT" value="0.0">,
+        LNT: <input id="lon" name="LNT" value="0.0">
         <button type="button" onclick="getLocation()">내 위치 가져오기</button>
-        <button type="submit" >근처 WIFI정보 보기</button>
+        <button type="submit">근처 WIFI정보 보기</button>
     </form>
 
     <script>
@@ -77,12 +79,12 @@
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
                 z.value = "Geolocation is not supported by this browser.";
-                zz.value= "Geolocation is not supported by this browser."
+                zz.value = "Geolocation is not supported by this browser."
             }
         }
 
         function showPosition(position) {
-            z.value = position.coords.latitude ;
+            z.value = position.coords.latitude;
             zz.value = position.coords.longitude;
         }
     </script>
@@ -111,33 +113,41 @@
         ArrayList<BookmarkGroup> bookmarkGroupList = bookmarkService.selectBookmarkGroup();
         if (bookmarkGroupList.size() == 0) {
     %>
-        <tr>
-            <td colspan="100%">정보가 존재하지 않습니다.</td>
-        </tr>
+    <tr>
+        <td colspan="100%">정보가 존재하지 않습니다.</td>
+    </tr>
     <%
-        }
-        else{
-            for(BookmarkGroup group : bookmarkGroupList){
+    } else {
+        for (BookmarkGroup group : bookmarkGroupList) {
 
     %>
+    <form>
     <tr>
-        <td><%=group.getGroupId()%></td>
-        <td><%=group.getGroupName()%></td>
-        <td><%=group.getGroupOrder()%></td>
-        <td><%=group.getGroupRegDate()%></td>
-        <td><%=group.getGroupEditDate()%></td>
+        <td><%=group.getGroupId()%>
+        </td>
+        <td><%=group.getGroupName()%>
+        </td>
+        <td name="order"><%=group.getGroupOrder()%>
+        </td>
+        <td><%=group.getGroupRegDate()%>
+        </td>
+        <td><%=group.getGroupEditDate()%>
+        </td>
         <td>
-            <a href="">수정  &nbsp;  </a>
-            <a href="">삭제  </a>
+            <a href="">수정 </a>
+            &nbsp;
+            <a href="bookmark-group-delete.jsp?id=<%=group.getGroupId()%>">
+                삭제
+            </a>
         </td>
     </tr>
+    </form>
+
     <%
             }
         }
     %>
-
     </tbody>
-
-
+</table>
 </body>
 </html>
