@@ -1,16 +1,15 @@
-<%@ page import="com.example.mission1.BookmarkService" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.mission1.Bookmark" %><%--
+<%@ page import="com.example.mission1.Bookmark" %>
+<%@ page import="com.example.mission1.BookmarkService" %><%--
   Created by IntelliJ IDEA.
   User: hayeongkim
   Date: 2023/04/24
-  Time: 2:24 PM
+  Time: 2:48 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>bookmark list</title>
+    <title>bookmark delete</title>
     <style>
         .list {
             font-family: Arial, Helvetica, sans-serif;
@@ -47,8 +46,7 @@
     </style>
 </head>
 <body>
-<h1> 북마크 목록 </h1>
-<br/>
+<h1>북마크 삭제</h1>
 <a href="index.jsp">홈</a>
 |
 <a href="history.jsp">위치 히스토리 목록</a>
@@ -61,32 +59,36 @@
 
 <%
     BookmarkService bookmarkService = new BookmarkService();
-    ArrayList<Bookmark> bookmarkList = bookmarkService.selectBookmark();
+    int id = Integer.parseInt(request.getParameter("id"));
+    Bookmark bookmark = bookmarkService.selectBookmark(id);
 %>
-<table class="list">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>북마크 이름</th>
-        <th>와이파이명</th>
-        <th>등록일자</th>
-        <th>비고</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%for(Bookmark bookmark : bookmarkList){%>
+<form action="bookmark-delete-submit.jsp" method="post">
+    <input type="hidden" name="id" value="<%=id%>" />
+    <table class="list">
         <tr>
-            <td><%=bookmark.getBookmarkId()%></td>
-            <td><%=bookmark.getBoomarkGroupName()%></td>
-            <td><%=bookmark.getWifiName()%></td>
-            <td><%=bookmark.getBookmarkRegDate()%></td>
-            <td>
-                <a href="bookmark-delete.jsp?id=<%=bookmark.getBookmarkId()%>">삭제</a>
+            <th>북마크 이름</th>
+            <td><%=bookmark.getBoomarkGroupName()%>
             </td>
-
         </tr>
-    <%}%>
-    </tbody>
-</table>
+        <tr>
+            <th>와이파이명</th>
+            <td><%=bookmark.getWifiName()%>
+            </td>
+        </tr>
+        <tr>
+            <th>등록일자</th>
+            <td><%=bookmark.getBookmarkRegDate()%>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100%" style="text-align: center">
+                <a href="bookmark-list.jsp">돌아가기</a>
+                |
+                <input type="submit" value="삭제">
+            </td>
+        </tr>
+    </table>
+</form>
+
 </body>
 </html>
