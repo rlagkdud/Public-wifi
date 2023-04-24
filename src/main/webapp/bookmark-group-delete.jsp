@@ -15,7 +15,7 @@
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
-            font-size: 7pt;
+            font-size: 10pt;
             text-align: center;
 
         }
