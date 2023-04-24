@@ -90,7 +90,7 @@ public class BookmarkService {
         return boomarkGroupList;
     }
 
-    public BookmarkGroup selectOneBookmarkGroup(int id) {
+    public BookmarkGroup selectBookmarkGroup(int id) {
 
 
         String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";

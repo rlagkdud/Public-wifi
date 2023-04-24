@@ -61,34 +61,7 @@
 <a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 |
 <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
-
-<div>
-    <form>
-        LAT: <input id="lat" name="LAT" value="0.0">,
-        LNT: <input id="lon" name="LNT" value="0.0">
-        <button type="button" onclick="getLocation()">내 위치 가져오기</button>
-        <button type="submit">근처 WIFI정보 보기</button>
-    </form>
-
-    <script>
-        var z = document.getElementById("lat");
-        var zz = document.getElementById("lon");
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                z.value = "Geolocation is not supported by this browser.";
-                zz.value = "Geolocation is not supported by this browser."
-            }
-        }
-
-        function showPosition(position) {
-            z.value = position.coords.latitude;
-            zz.value = position.coords.longitude;
-        }
-    </script>
-</div>
+<br/>
 
 
 <a href="bookmark-group-add.jsp">

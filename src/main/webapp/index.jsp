@@ -20,6 +20,10 @@
             text-align: center;
         }
 
+        th {
+            border: solid 1px #ddd;
+        }
+
         .list td, #list th {
             border: 1px solid #ddd;
             padding: 8px;
@@ -122,12 +126,12 @@
         </tr>
         <%
             } else {
-                //TODO: 히스토리에 내 LAT, LNT 저장하기 --> O
+                //히스토리에 내 LAT, LNT 저장하기
                 String lat = request.getParameter("LAT");
                 String lnt = request.getParameter("LNT");
                 String searchDate = String.valueOf(LocalDate.now());
                 wifiService.insertHistory(lat, lnt, searchDate);
-                //TODO: 와이파이정보 가까운거 20개 가져오기 key값인 LAT이랑 LNT받아서 wifiService메소드로 넘겨서 쿼리처리하고 ArrayList<Wifi> wifiList반환하면 될듯!
+                // 와이파이정보 가까운거 20개 가져오기
                 ArrayList<Wifi> nearWifiList = wifiService.selectNearWifi(lat, lnt);
         %>
         <%for(Wifi wifi: nearWifiList){ %>
@@ -160,64 +164,6 @@
                 }
             }
         %>
-
-
-
-<%--    <%--%>
-<%--        int rowCnt = wifiService.selectCount();--%>
-<%--        if (rowCnt == 0) {--%>
-<%--    %>--%>
-<%--    &lt;%&ndash;  select 했을때 row수가 0이면 위치 정보를 입력한 후에 조회해 주세요      &ndash;%&gt;--%>
-<%--    <tr>--%>
-<%--        <td>위치 정보를 입력한 후에 조회해 주세요</td>--%>
-<%--    </tr>--%>
-<%--    <% } else {--%>
-<%--        ArrayList<Wifi> wifiList = wifiService.select();--%>
-<%--        System.out.println("wifilist.size()= " + wifiList.size());--%>
-<%--        for (Wifi wifi : wifiList) {--%>
-
-<%--    %>--%>
-<%--    <tr>--%>
-<%--        <td><%=wifi.getX_SIFI_DISTANCE()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_MGR_NO()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_WRDOFC()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_MAIN_NM()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_ADRES1()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_ADRES2()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_INSTL_FLOOR()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_INSTL_TY()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_INSTL_MBY()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_SVC_SE()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_CMCWR()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_CNSTC_YEAR()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_INOUT_DOOR()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getX_SWIFI_REMARS3()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getLAT()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getLNT()%>--%>
-<%--        </td>--%>
-<%--        <td><%=wifi.getWORK_DTTM()%>--%>
-<%--        </td>--%>
-<%--    </tr>--%>
-<%--    &lt;%&ndash;  Open Api 와아파이 정보 가져오기누른 후에 테이블이 생성되어 있다면 보여주기  &ndash;%&gt;--%>
-<%--    <%--%>
-<%--            }--%>
-<%--        }--%>
-<%--    %>--%>
 
     </tbody>
 </table>

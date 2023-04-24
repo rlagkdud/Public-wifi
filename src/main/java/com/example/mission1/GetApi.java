@@ -55,13 +55,10 @@ public class GetApi {
         ArrayList<String> list = new ArrayList<>(); // 여기다가 모든 페이징 리스트를 다 담아 올거야
         int q = listTotalCnt / 1000;
         int mod = listTotalCnt % 1000;
-        System.out.println("q = " + q);
-        System.out.println("mod = " + mod);
+
         int start =1;
         int end = 1000;
         for(int i = 1; i<=q; i++){
-//            System.out.println("start = " + start);
-//            System.out.println("end = " + end);
 
             // string url만들기
             String s = getJsonPage(start, end);
@@ -73,8 +70,6 @@ public class GetApi {
         }
 
         // 마지막 나머지 페이징 처리
-//        System.out.println("last start = " + start);
-//        System.out.println("last end = " + listTotalCnt);
         String s = getJsonPage(start, listTotalCnt);
         list.add(s);
         return list;

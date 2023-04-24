@@ -13,7 +13,6 @@
 <body>
 <%
   int id = Integer.parseInt(request.getParameter("id"));
-  //System.out.println("submit id"+" "+id);
   BookmarkService bookmarkService = new BookmarkService();
   int isDelete = bookmarkService.deleteBookmarkGroup(id);
 

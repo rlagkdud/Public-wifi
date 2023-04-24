@@ -63,12 +63,11 @@
 <%
     // id에 해당하는 row를 셀렉트 해오기
     int id = Integer.parseInt(request.getParameter("id"));
-    //System.out.println("hidden id = " + id);
     BookmarkService bookmarkService = new BookmarkService();
-    BookmarkGroup group = bookmarkService.selectOneBookmarkGroup(id);
+    BookmarkGroup group = bookmarkService.selectBookmarkGroup(id);
     String name = group.getGroupName();
     int order = group.getGroupOrder();
-    //int groupId = group.getGroupId();
+
 %>
 <table class="list">
     <form action="bookmark-group-edit-submit.jsp" method="post">

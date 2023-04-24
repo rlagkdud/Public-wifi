@@ -4,7 +4,8 @@
 <%@ page import="com.example.mission1.GetJson" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.example.mission1.Wifi" %>
-<%@ page import="com.example.mission1.WifiService" %><%--
+<%@ page import="com.example.mission1.WifiService" %>
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: hayeongkim
   Date: 2023/04/18
@@ -15,6 +16,11 @@
 <html>
 <head>
     <title>Load Wifi</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <%
@@ -29,7 +35,6 @@
 
     // json-> java객체로 저장 -> 객체를 db에 insert
     wifiService.insertList(wifiList);
-
 %>
 <h1><%=listTotalCnt%>개의 WIFI 정보를 정상적으로 저장하였습니다</h1>
 <a href="index.jsp">홈 으로 가기</a>

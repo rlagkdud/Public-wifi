@@ -16,9 +16,6 @@
   String name = request.getParameter("name");
   int order = Integer.parseInt(request.getParameter("order"));
   String id = request.getParameter("id");
-  System.out.println("name = " + name);
-  System.out.println("order = " + order);
-  System.out.println("hidden id = " + id);
 
   // update해서 결과가 0보다 크면 성공 아니면 실패
   BookmarkService bookmarkService = new BookmarkService();

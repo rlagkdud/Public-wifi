@@ -15,8 +15,6 @@
     request.setCharacterEncoding("UTF-8");
     String mgrNo = request.getParameter("mgrNo");
     int groupId = Integer.parseInt(request.getParameter("group"));
-//    System.out.println("mgrNo = " + mgrNo);
-//    System.out.println("groupId = " + groupId);
     if (groupId == 0) {
 %>
 <script>
@@ -27,12 +25,10 @@
     // TODO: insert 북마크그룹 이름, 와아피이이름, 현재시간
     BookmarkService bookmarkService = new BookmarkService();
     WifiService wifiService = new WifiService();
-    BookmarkGroup group = bookmarkService.selectOneBookmarkGroup(groupId);
+    BookmarkGroup group = bookmarkService.selectBookmarkGroup(groupId);
     Wifi wifi = wifiService.selectDetail(mgrNo);
     String groupName = group.getGroupName();
     String wifiName = wifi.getX_SWIFI_MAIN_NM();
-//    System.out.println("goupName = " + groupName);
-//    System.out.println("wifiName = " + wifiName);
 
     int isBookmarkInsert = bookmarkService.insertBookmark(groupName, wifiName);
 

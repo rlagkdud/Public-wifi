@@ -99,17 +99,7 @@
 
         <% } %>
     </tbody>
-<%--    <script>--%>
 
-<%--        function getHistoryInfo(){--%>
-<%--            var id = document.getElementById("historyId");--%>
-<%--            var input = document.getElementsByTagName("input");--%>
-<%--            console.log(id.innerHTML);--%>
-<%--            console.log("history info");--%>
-<%--            input.value = id.innerHTML;--%>
-<%--            return id;--%>
-<%--        }--%>
-<%--    </script>--%>
 
 </body>
 </html>
