@@ -1,5 +1,8 @@
 <%@ page import="com.example.mission1.WifiService" %>
-<%@ page import="com.example.mission1.Wifi" %><%--
+<%@ page import="com.example.mission1.Wifi" %>
+<%@ page import="com.example.mission1.BookmarkService" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.mission1.BookmarkGroup" %><%--
   Created by IntelliJ IDEA.
   User: hayeongkim
   Date: 2023/04/21
@@ -55,32 +58,6 @@
 |
 <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
-<div>
-    <form>
-        LAT: <input id="lat" name="LAT" value="0.0">,
-        LNT: <input id="lon" name="LNT" value="0.0">
-        <button type="button" onclick="getLocation()">내 위치 가져오기</button>
-        <button type="submit">근처 WIFI정보 보기</button>
-    </form>
-
-    <script>
-        var z = document.getElementById("lat");
-        var zz = document.getElementById("lon");
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                z.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            z.value = position.coords.latitude;
-            zz.value = position.coords.longitude;
-        }
-    </script>
-</div>
 <br/>
 
 <%
@@ -88,6 +65,24 @@
     String mgrNo = request.getParameter("mgr-no");
     Wifi wifi = wifiService.selectDetail(mgrNo);
 %>
+
+<%--TODO: 북마크 리스트 드롭다운 메뉴로 보여주고 insert하기--%>
+<%-- 북마크 목록 불러오기--%>
+<%
+    BookmarkService bookmarkService = new BookmarkService();
+    ArrayList<BookmarkGroup> groupList = bookmarkService.selectBookmarkGroup();
+%>
+<form action="bookmark-add-submit.jsp" method="post">
+    <input type="hidden" name="mgrNo" value="<%=mgrNo%>">
+    <select name="group">
+        <option value="0">북마크 그룹이름 선택</option>
+        <% for(BookmarkGroup group : groupList){ %>
+        <option value="<%=group.getGroupId()%>"><%=group.getGroupName()%></option>
+        <%}%>
+    </select>
+    <input type="submit" value="즐겨찾기 추가">
+</form>
+
 <table class="list">
     <tr>
         <th>거리(Km)</th>

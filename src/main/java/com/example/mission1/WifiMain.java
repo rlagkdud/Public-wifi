@@ -77,9 +77,5 @@ public class WifiMain {
         // in 즐겨찾기보기
         //      즐겨찾기 삭제
 
-
-         BookmarkService bookmarkService = new BookmarkService();
-         bookmarkService.deleteBookmarkGroup(19);
-
     }
 }

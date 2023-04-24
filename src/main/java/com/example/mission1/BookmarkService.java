@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class BookmarkService {
+    // 북마크 그룹
     public ArrayList<BookmarkGroup> selectBookmarkGroup() {
 
 
@@ -343,6 +344,72 @@ public class BookmarkService {
                 System.out.println("북바크 그룹 수정 실패");
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    // 북마크
+    public int insertBookmark(String groupName, String wifiName) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int res = 0;
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "insert into BOOKMARK (BOOKMARK_GROUP_NM, BOOKMARK_WIFI_NM, BOOKMARK_REG_DATE) " +
+                    " values(?, ?, ?);";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, groupName);
+            ps.setString(2, wifiName);
+            ps.setString(3, String.valueOf(LocalDateTime.now()));
+
+
+            // 4. sql문장 실행
+            res = ps.executeUpdate();
+            // 5. sql 결과 처리
         } catch (SQLException e) {
             e.printStackTrace();
         }
