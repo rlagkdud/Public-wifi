@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Title</title>
+    <title>bookmark group add</title>
     <style>
         .list {
             font-family: Arial, Helvetica, sans-serif;
@@ -54,7 +54,7 @@
 |
 <a href="load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
 |
-<a href="">즐겨 찾기 보기</a>
+<a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 |
 <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
 
