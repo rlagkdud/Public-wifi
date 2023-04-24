@@ -441,4 +441,85 @@ public class BookmarkService {
         }
         return res;
     }
+
+    public ArrayList<Bookmark> selectBookmark() {
+
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        ArrayList<Bookmark> bookmarkList = new ArrayList<>();
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "select BOOKMARK_ID, BOOKMARK_GROUP_NM, BOOKMARK_WIFI_NM, BOOKMARK_REG_DATE from bookmark order by BOOKMARK_ID;";
+            ps = conn.prepareStatement(sql);
+
+            // 4. sql문장 실행
+            rs = ps.executeQuery();
+
+            // 5. sql 결과 처리
+            while (rs.next()) {
+                // getString으로 행전부 가져와서
+                int bookmarkId = rs.getInt("BOOKMARK_ID");
+                String bookmarkGroupName = rs.getString("BOOKMARK_GROUP_NM");
+                String wifiName = rs.getString("BOOKMARK_WIFI_NM");
+                String bookmarkRegDate = rs.getString("BOOKMARK_REG_DATE");
+
+                // set해주고
+                Bookmark bookmark = new Bookmark();
+                bookmark.setBookmarkId(bookmarkId);
+                bookmark.setBoomarkGroupName(bookmarkGroupName);
+                bookmark.setWifiName(wifiName);
+                bookmark.setBookmarkRegDate(bookmarkRegDate);
+
+                //List에 추가
+                bookmarkList.add(bookmark);
+            }
+            //List 반환
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bookmarkList;
+    }
 }

@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.example.mission1.BookmarkService" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.mission1.Bookmark" %><%--
   Created by IntelliJ IDEA.
   User: hayeongkim
   Date: 2023/04/24
@@ -56,5 +58,35 @@
 <a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 |
 <a href="bookmark-group.jsp">즐겨찾기 그룹 관리</a>
+
+<%
+    BookmarkService bookmarkService = new BookmarkService();
+    ArrayList<Bookmark> bookmarkList = bookmarkService.selectBookmark();
+%>
+<table class="list">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>북마크 이름</th>
+        <th>와이파이명</th>
+        <th>등록일자</th>
+        <th>비고</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%for(Bookmark bookmark : bookmarkList){%>
+        <tr>
+            <td><%=bookmark.getBookmarkId()%></td>
+            <td><%=bookmark.getBoomarkGroupName()%></td>
+            <td><%=bookmark.getWifiName()%></td>
+            <td><%=bookmark.getBookmarkRegDate()%></td>
+            <td>
+                <a href="">삭제</a>
+            </td>
+
+        </tr>
+    <%}%>
+    </tbody>
+
 </body>
 </html>
