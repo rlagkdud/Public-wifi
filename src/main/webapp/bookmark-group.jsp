@@ -121,27 +121,27 @@
         for (BookmarkGroup group : bookmarkGroupList) {
 
     %>
-    <form>
+<%--    <form>--%>
     <tr>
         <td><%=group.getGroupId()%>
         </td>
         <td><%=group.getGroupName()%>
         </td>
-        <td name="order"><%=group.getGroupOrder()%>
+        <td><%=group.getGroupOrder()%>
         </td>
         <td><%=group.getGroupRegDate()%>
         </td>
         <td><%=group.getGroupEditDate()%>
         </td>
         <td>
-            <a href="">수정 </a>
+            <a href="bookmark-group-edit.jsp?id=<%=group.getGroupId()%>">수정 </a>
             &nbsp;
             <a href="bookmark-group-delete.jsp?id=<%=group.getGroupId()%>">
                 삭제
             </a>
         </td>
     </tr>
-    </form>
+<%--    </form>--%>
 
     <%
             }

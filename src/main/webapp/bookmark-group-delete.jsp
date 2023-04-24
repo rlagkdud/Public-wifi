@@ -10,43 +10,6 @@
 <html>
 <head>
     <title>북마크 그룹 삭제</title>
-    <style>
-        .list {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            font-size: 10pt;
-            text-align: center;
-
-        }
-
-        th {
-            border: solid 1px #ddd;
-            width: 30%;
-        }
-
-        .list td, #list th {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-
-        .list tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .list tr:hover {
-            background-color: #ddd;
-        }
-
-        .list th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #04AA6D;
-            color: white;
-        }
-    </style>
 </head>
 <body>
 <h1> 북마크 삭제 </h1>

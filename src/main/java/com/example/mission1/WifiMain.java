@@ -68,7 +68,7 @@ public class WifiMain {
         //          북마크그룹이름 추가 O
         //                북마크이름/ 순서 입력받아 북마크table에 insert O
         //          북마크그룹 삭제 O
-        //          북마크그룹 수정
+        //          북마크그룹 수정 O
         //
         // in detail
         //      북마크 그룹이름 선택 (if 북마크 테이블에 row가 있을때 drop down메뉴로 보여주기)

@@ -300,4 +300,78 @@ public class BookmarkService {
         }
         return res;
     }
+
+    public int updateBookmarkGroup(String id, String name, int order) {
+
+        String url = "jdbc:mariadb://127.0.0.1:3306/WIFI";
+        String dbUserid = "testuser1";
+        String dbPassword = "zerobase";
+        // 1. 드라이버 로드
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int res = 0;
+
+        // 2. database connection 생성
+        try {
+            conn = DriverManager.getConnection(url, dbUserid, dbPassword);
+
+            // 3. sql을 위한 statement객체 생성
+            String sql = "update BOOKMARK_GROUP " +
+                    " set GROUP_EDIT_DATE = ?, GROUP_ORDER = ?, GROUP_NM = ? " +
+                    "where GROUP_ID = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, String.valueOf(LocalDateTime.now()));
+            ps.setInt(2, order);
+            ps.setString(3, name);
+            ps.setString(4, id);
+
+
+            // 4. sql문장 실행
+            res = ps.executeUpdate();
+
+            // 5. sql 결과 처리
+            if(res>0){
+                System.out.println("북마크 그룹 수정 성공");
+            } else{
+                System.out.println("북바크 그룹 수정 실패");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            // 6. jdbc 객체 연결 해제
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (ps != null && !ps.isClosed()) {
+                    ps.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
 }
