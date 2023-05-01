@@ -28,8 +28,6 @@ public class WifiService {
         // 2. database connection 생성
         try {
             conn = DriverManager.getConnection(url, dbUserid, dbPassword);
-            System.out.println(longitude);
-            System.out.println(latitud);
 
             // 3. sql을 위한 statement객체 생성
             String sql = "SELECT" +
