@@ -25,7 +25,7 @@
             border: solid 1px #ddd;
         }
 
-        .list td, #list th {
+        .list td, .list th {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
@@ -40,9 +40,9 @@
         }
 
         .list th {
+            text-align: center;
             padding-top: 12px;
             padding-bottom: 12px;
-            text-align: center;
             background-color: #04AA6D;
             color: white;
         }
@@ -75,21 +75,21 @@
     </form>
 
     <script>
-        var z = document.getElementById("lat");
-        var zz = document.getElementById("lon");
+        var lat = document.getElementById("lat");
+        var lon = document.getElementById("lon");
 
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
-                z.value = "Geolocation is not supported by this browser.";
-                zz.value= "Geolocation is not supported by this browser."
+                lat.value = "Geolocation is not supported by this browser.";
+                lon.value= "Geolocation is not supported by this browser."
             }
         }
 
         function showPosition(position) {
-            z.value = position.coords.latitude ;
-            zz.value = position.coords.longitude;
+            lat.value = position.coords.latitude ;
+            lon.value = position.coords.longitude;
         }
     </script>
 </div>
@@ -117,7 +117,7 @@
         <th>작업일자</th>
     </tr>
     </thead>
-    <%-- TODO: 위치정보가져왔을때 보여주는걸로 바꿔야겠다--%>
+
     <tbody>
         <%
             if(request.getParameter("LAT") == null || request.getParameter("LNT") == null){

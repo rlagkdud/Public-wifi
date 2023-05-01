@@ -24,9 +24,10 @@
             border: solid 1px #ddd;
         }
 
-        .list td, #list th {
+        .list td, .list th {
             border: 1px solid #ddd;
             padding: 8px;
+            text-align: center;
         }
 
         .list tr:nth-child(even) {
@@ -40,7 +41,7 @@
         .list th {
             padding-top: 12px;
             padding-bottom: 12px;
-            text-align: left;
+            text-align: center;
             background-color: #04AA6D;
             color: white;
         }
