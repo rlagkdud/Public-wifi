@@ -22,8 +22,6 @@
     request.setCharacterEncoding("UTF-8");
     String name = request.getParameter("name");
     String order =request.getParameter("order");
-    System.out.println("name = " + name);
-    System.out.println("order = " + order);
 
 
     BookmarkService bookmarkService = new BookmarkService();
