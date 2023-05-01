@@ -6,6 +6,7 @@
 <%@ page import="com.example.mission1.WifiService" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@
         .list th {
             padding-top: 12px;
             padding-bottom: 12px;
-            text-align: left;
+            text-align: center;
             background-color: #04AA6D;
             color: white;
         }
@@ -129,7 +130,7 @@
                 //히스토리에 내 LAT, LNT 저장하기
                 String lat = request.getParameter("LAT");
                 String lnt = request.getParameter("LNT");
-                String searchDate = String.valueOf(LocalDate.now());
+                String searchDate = String.valueOf(LocalDateTime.now());
                 wifiService.insertHistory(lat, lnt, searchDate);
                 // 와이파이정보 가까운거 20개 가져오기
                 ArrayList<Wifi> nearWifiList = wifiService.selectNearWifi(lat, lnt);
